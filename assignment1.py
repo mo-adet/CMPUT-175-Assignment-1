@@ -54,9 +54,33 @@ def getProductPrices(products: list) -> dict:
 
     return product_prices
 
+def getProdcutInfo(products: list) -> dict:
+    """
+
+    :param products:
+    :return:
+    """
+    product_infos = {}
+    for i in range(len(products)):
+        product_id = products[i][0]
+        product_name = products[i][1]
+        product_price = float(products[i][2])
+
+        product_infos[product_id] = {"name": product_name, "price": product_price }
+
+    return product_infos
+
+def getSalesInfo(sales: list):
+    """
+
+    :param sales:
+    :return:
+    """
+    sales_info
+    for i in range(len(sales)):
 
 
-def getSales(sales: list, returnals: list, products: list)->dict:
+def getNetSales(sales: list, returnals: list, products: list)->dict:
     """
     determines the top 3 sales
     :param sales:
@@ -91,7 +115,7 @@ def getSales(sales: list, returnals: list, products: list)->dict:
     return net_sales
 
 
-def determineTopSales(net_sales: dict, product_names: dict, product_prices: dict)->None:
+def determineTopSales(net_sales: dict, product_infos: dict)->None:
     """
     # Determines the top 3 items sold (along with the revenue) and prints them out to user.
     :param net_sales: dict of the net sales
@@ -110,10 +134,10 @@ def determineTopSales(net_sales: dict, product_names: dict, product_prices: dict
 
 
     top_revenues = []
-    for id, price in product_prices.items():
+    for id, product_info in product_infos.items():
         products_sold = net_sales[id]
-        product_revenue = float(price * products_sold)
-        top_revenues.append([id, product_revenue])
+
+        #top_revenues.append([id, product_revenue])
 
     top_revenues.sort(key=lambda x: x[1], reverse=True)
     top_revenues = top_revenues[:3]
@@ -124,7 +148,7 @@ def determineTopSales(net_sales: dict, product_names: dict, product_prices: dict
     for i in range(len(top_sales)):
         product_id = top_sales[i][0]
 
-        product_name = product_names[product_id]
+        product_name = product_infos[product_id]["name"]
         products_sold = net_sales[product_id]
 
         print(f"{product_name:>20} {products_sold:>3}")
@@ -133,7 +157,7 @@ def determineTopSales(net_sales: dict, product_names: dict, product_prices: dict
     for i in range(len(top_revenues)):
         product_id = top_revenues[i][0]
         product_revenue = top_revenues[i][1]
-        product_name = product_names[product_id]
+        product_name = product_infos[product_id]["name"]
         print(f"{product_name:>20} ${product_revenue:<10,.2f}")
 
 
@@ -153,13 +177,14 @@ def main():
     print(returnals)
     print(products)
 
-    net_sales = getSales(sales, returnals, products)
+    net_sales = getNetSales(sales, returnals, products)
     print(net_sales)
 
-    product_names = getProductNames(products)
-    product_prices = getProductPrices(products)
+    product_infos = getProdcutInfo(products)
 
-    determineTopSales(net_sales, product_names, product_prices)
+    print(product_infos["P13"])
+
+    determineTopSales(net_sales, product_infos)
 
 if __name__ == "__main__":
     main()
