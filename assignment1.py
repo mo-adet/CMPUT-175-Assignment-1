@@ -245,7 +245,7 @@ def showDiscountAverages(discount_averages: dict, product_infos: dict, net_sales
         product_price = product_infos[product_id]["price"]
         product_revenue = net_revnues[product_id]
 
-        # determining the toal discounted amount for each products
+        # determining the toal discounted amount for each of the products
         total_discounted = (product_price * units_sold) - product_revenue
 
         top_discounts.append([product_id, total_discounted])
