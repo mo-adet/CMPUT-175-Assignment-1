@@ -332,17 +332,17 @@ def determineNumReturns(returnals:list, sales_infos:dict, product_infos):
         print(f"{product_id:3} {product_name:20} {num_returns:3>}")
 
 
-def writeToFile(filename: str, total_num_sales: dict) -> None:
+def writeToFile(filename: str, net_sales: dict) -> None:
     """
-    writes the product ID and total number of units sold. (Assuming returns are ignored).
+    writes the product ID and total number of units sold. .
     :param filename: str
-    :param total_num_sales: total number of sales for each id ignoring whether they have been returned
+    :param net_sales: total number of sales for each id removing the ones that have been returned
     :return:
     """
     # opening in the overwrite mode
     with open(filename, "w") as file:
         file.write("Product_ID, Total_Units_Sold\n")
-        for product_id, num_sold in total_num_sales.items():
+        for product_id, num_sold in net_sales.items():
             # converting the integer to str so that it cna written to the file.
             num_sold = str(num_sold)
             line = ",".join([product_id, num_sold])
@@ -395,7 +395,7 @@ def main():
     determineNumReturns(returnals,unfiltered_sales_infos,product_infos)
 
     # Q6
-    writeToFile("transaction_units.txt",total_num_sales)
+    writeToFile("transaction_units.txt", total_num_sales)
 
 if __name__ == "__main__":
     main()
